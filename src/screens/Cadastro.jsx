@@ -1,106 +1,129 @@
 import React, {useState} from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Button } from "react-native";
-import api from '../axios/axios'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from "react-native";
+import api from '../axios/axios';
 
-export default function Cadastro({ navigation }){
-    const [user, setUser] = useState ({ 
-        cpf: "",
-        email:"",
-        password: "",
-        name:"",
-        data_nascimento:""
-    });
-
-    async function handleCadastro(){
-        await api.postUser(user).then(
-            (response)=>{
-                Alert.alert('OK',response.data.message)
-            },(error)=>{
-                Alert.alert('Erro',error.response.data.error)
+    export default function Cadastro({ navigation }){
+        const [user, setUser] = useState ({ 
+            nome: "",
+            email:"",
+            cpf: "",
+            senha:""
+        });
+        async function handleCadastro() {
+            if (!user.nome || !user.email || !user.cpf || !user.senha) {
+                Alert.alert('Erro', 'Todos os campos devem ser preenchidos');
+                return;
             }
-        )
+            try {
+                await api.postUser(user);
+                Alert.alert('Sucesso', 'Cadastro realizado com sucesso');
+            } catch (error) {
+                Alert.alert('Erro', 'Erro ao cadastrar');
+            }
+        }
+            
+        return(
+            <View style={styles.container}>
+            <View style={styles.square}>
+            <Image
+                    source={require('../../assets/senai.png')} // Caminho para a sua imagem
+                    style={styles.image}
+                />
+            <TextInput 
+            style={styles.input}
+            placeholder="Nome"
+            value={user.nome}
+            onChangeText={(value)=> {
+                setUser({...user, nome: value});
+            }}
+            />
+            <TextInput
+            style={styles.input}
+            placeholder="Email"
+            value={user.email}
+            onChangeText={(value)=> {
+                setUser({...user, email: value});
+            }}
+            />
+            <TextInput
+            style={styles.input}
+            placeholder="CPF"
+            value={user.cpf}
+            onChangeText={(value)=> {
+                setUser({...user, cpf: value});
+            }}
+            />
+            <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            value={user.senha}
+            onChangeText={(value)=> {
+                setUser({...user, senha: value});
+            }}
+            />
+            <TouchableOpacity onPress={handleCadastro} style={styles.button}>
+                <Text style={styles.buttonText}>Cadastrar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.link}>Já esta cadastrado?   Clique aqui</Text>
+            </TouchableOpacity>
+            </View>
+            </View>
+        );
     }
-        
-    return(
-        <View style={styles.container}>
-        <Text style={styles.title}> Faça Cadastro</Text>
-        <TextInput 
-        style={styles.input}
-        placeholder="cpf"
-        value={user.cpf}
-        onChangeText={(value)=> {
-            setUser({...user, cpf: value});
-        }}
-        />
-        <TextInput
-        style={styles.input}
-        placeholder="email"
-        value={user.email}
-        onChangeText={(value)=> {
-            setUser({...user, email: value});
-        }}
-        />
-        <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={user.password}
-        onChangeText={(value)=> {
-            setUser({...user, password: value});
-        }}
-        />
-        <TextInput
-        style={styles.input}
-        placeholder="nome"
-        value={user.name}
-        onChangeText={(value)=> {
-            setUser({...user, name: value});
-        }}
-        />
-        <TextInput
-        style={styles.input}
-        placeholder="data de nascimento"
-        value={user.data_nascimento}
-        onChangeText={(value)=> {
-            setUser({...user, data_nascimento: value});
-        }}
-        />
-        <TouchableOpacity onPress={handleCadastro} style={styles.button}>
-            <Text>Cadastrar</Text>
-        </TouchableOpacity>
-        <Button title="Voltar para login" onPress={()=> navigation.navigate("Login")}/>
-        </View>
-    );
-}
+
+
     const styles = StyleSheet.create({
         container: {
-            alignContent: 'center',
-            borderRadius: '10px',
-            width: '330px',/* Valor ajustado para um meio-termo */
-            height: '435px', /* Preferi manter a altura maior para evitar cortes */
-            backgroundColor: '#f7f7f7',
-            marginTop: '20px',
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#F26F6F",
         },
-        title:{
-            fontSize:28,
-            fontWeight:'bold'
-    },
-    input:{
-        width: '100%',
-        height:40,
-        borderBottomWidth:1,
-        marginBottom:20,
-        paddingHorizontal:10
-    },
-    button:{
-        backgroundColor: 'red',
-        padding:10,
-        borderRadius:20,
-        height: 50,
-        width:'50%',
-        alignItems: 'center',
-        fontSize:58
-    }
-});
-
-
-    
+        square: { 
+            backgroundColor: "#B22222", 
+            padding: 100, 
+            borderRadius: 15, 
+            width: "90%", 
+            maxWidth: 350, 
+            alignItems: "center",
+        },
+        title: {
+            color: "#FFF",
+            fontSize: 22,
+            fontWeight: "bold",
+            marginBottom: 15,
+        },
+        image: {
+            width: 268, // Largura da imagem
+            height: 70, // Altura da imagem
+            padding:22,
+            marginBottom: 40, // Espaçamento abaixo da imagem
+        },
+        input: {
+            width: "200%",
+            padding: 12,
+            marginVertical: 12,
+            borderRadius: 15,
+            fontSize: 16,
+            backgroundColor: "#FFF",
+        },
+        button: {
+            width: "150%",
+            padding: 15,
+            backgroundColor: "#FF0802",
+            borderRadius: 15,
+            alignItems: "center",
+            marginTop: 15,
+        },
+        buttonText: {
+            color: "white",
+            fontSize: 18,
+            fontWeight: "bold",
+        },
+        link: {
+            color: "white",
+            marginTop: 12,
+            fontWeight: "600",
+        },
+    });

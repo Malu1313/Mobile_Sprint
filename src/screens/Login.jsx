@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, Button } from "react-native";
-import api from '../axios/axios'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from "react-native";
+import api from '../axios/axios';
 
 export default function Login({ navigation }){
     const [user, setUser] = useState ({ 
@@ -45,29 +45,47 @@ export default function Login({ navigation }){
         </View>
     );
 }
-    const styles = StyleSheet.create({
-        container: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        },
-        title:{
-            fontSize:28,
-            fontWeight:'bold'
-    },
-    input:{
-        width: '100%',
-        height:40,
-        borderBottomWidth:1,
-        marginBottom:20,
-        paddingHorizontal:10
-    },
-    button:{
-        backgroundColor: 'pink',
-        padding:10,
-        borderRadius:5
-    }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#b22222",
+    padding: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    backgroundColor: "white",
+    padding: 17,
+    marginBottom: 30,
+    borderRadius: 20,
+    fontSize: 16,
+    border: '1px solid rgba(28, 27, 27, 0.404)',
+    height: '30px',
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#ff4500",
+    padding: 12,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  link: {
+    marginTop: 10,
+    color: "white",
+    fontSize: 16,
+    textDecorationLine: "underline",
+  },
 });
-
-
-    
