@@ -9,6 +9,7 @@ import {
   Image,
 } from "react-native";
 import api from "../axios/axios";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Cadastro({ navigation }) {
   const [usuario, setUsuario] = useState({
@@ -16,6 +17,7 @@ export default function Cadastro({ navigation }) {
     email: "",
     cpf: "",
     senha: "",
+    showPassword: false,
   });
 
   async function handleCadastro() {
@@ -61,14 +63,20 @@ export default function Cadastro({ navigation }) {
             setUsuario({ ...usuario, cpf: value });
           }}
         />
+        <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.input}
+          style={styles.passwordInput}
           placeholder="Senha"
+          secureTextEntry={usuario.showPassword}
           value={usuario.senha}
           onChangeText={(value) => {
             setUsuario({ ...usuario, senha: value });
           }}
         />
+        <TouchableOpacity style={styles.eyeIcon} onPress={() => setUsuario({ ...usuario, showPassword: !usuario.showPassword })}>
+    <Ionicons name={usuario.showPassword ? "eye" : "eye-off"} size={24} color="grey" />
+  </TouchableOpacity>
+  </View>
         <TouchableOpacity onPress={handleCadastro} style={styles.button}>
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
@@ -132,5 +140,22 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: 12,
     fontWeight: "600",
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "200%",  // Definir para ocupar todo o espaço disponível
+    backgroundColor: "#FFF", // Para manter a mesma aparência do campo de senha
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    marginVertical: 12,
+  },
+  passwordInput: {
+    flex: 1,  // Ocupa todo o espaço disponível
+    height: 45,
+    fontSize: 16,
+    paddingHorizontal: 10,
+    backgroundColor: "#FFF",
+    borderRadius: 15,
   },
 });

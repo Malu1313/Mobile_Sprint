@@ -7,7 +7,7 @@ export default function Login({ navigation }){
   const [usuario, setUsuario] = useState ({ 
       email: "",
       senha: "",
-      showPassord: false,
+      showPassword: false,
   });
 
   async function handleLogin() {
@@ -46,14 +46,14 @@ export default function Login({ navigation }){
       style={styles.passwordInput}
       placeholder="Senha"
       value={usuario.senha}
-      secureTextEntry={usuario.showPassord}
+      secureTextEntry={usuario.showPassword}
       onChangeText={(value)=> {
           setUsuario({...usuario, senha: value});
       }}
       />
-      <TouchableOpacity onPress={()=> setUsuario({...usuario, showPassord:!usuario.showPassord})}>
-      <Ionicons name={usuario.showPassord?"eye-off":"eye"} size={24} color="white" />
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.eyeIcon} onPress={() => setUsuario({ ...usuario, showPassword: !usuario.showPassword })}>
+    <Ionicons name={usuario.showPassword ? "eye" : "eye-off"} size={24} color="grey" />
+  </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
                 <Text style={styles.buttonText}>Entrar</Text>
@@ -124,17 +124,18 @@ export default function Login({ navigation }){
         passwordContainer: {
             flexDirection: "row",
             alignItems: "center",
-            width: "200%",
-            padding: 10,
+            width: "200%",  // Definir para ocupar todo o espaço disponível
+            backgroundColor: "#FFF", // Para manter a mesma aparência do campo de senha
+            borderRadius: 15,
+            paddingHorizontal: 10,
+            marginVertical: 12,
           },
           passwordInput: {
-            flex: 1,
-            height: 43,
-            width: "200%",
-            padding: 12,
-            marginVertical: 12,
-            borderRadius: 15,
+            flex: 1,  // Ocupa todo o espaço disponível
+            height: 45,
             fontSize: 16,
-            backgroundColor: "#FFF"
+            paddingHorizontal: 10,
+            backgroundColor: "#FFF",
+            borderRadius: 15,
           },
     });
