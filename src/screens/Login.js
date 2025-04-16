@@ -16,7 +16,7 @@ export default function Login({ navigation }){
           (response)=>{
             console.log(response.data);
               Alert.alert("OK", response.data.message);
-          navigation.navigate("Home");
+          navigation.navigate("ListaSalas");
           },(error)=>{
             console.log(error.response.data);
               Alert.alert('Erro',error.response.data.error);
@@ -55,8 +55,11 @@ export default function Login({ navigation }){
     <Ionicons name={usuario.showPassword ? "eye" : "eye-off"} size={24} color="grey" />
   </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("ListaSalas")}>
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
                 <Text style={styles.buttonText}>Entrar</Text>
+         </TouchableOpacity>
+
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
             <Text style={styles.link}>Não esta cadastrado?   Clique aqui</Text>
