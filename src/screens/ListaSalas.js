@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +19,6 @@ export default function Salas() {
       try {
         const response = await api.getSalas();
         setSalas(response.data.sala);
-        console.log("Salas:", response.data.sala);
       } catch (error) {
         console.error("Erro ao buscar salas:", error);
       }
